@@ -9,13 +9,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getProducts(){
+     List<Product> products =  productService.getProducts();
 
-    @GetMapping("products/{productId}")
+        return ResponseEntity.status(HttpStatus.OK).body(products);
+
+
+    }
+
+    @GetMapping("/products/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer productId){
         Product product = productService.getProductById(productId);
         if(product!=null){
